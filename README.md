@@ -1,61 +1,111 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Todo API
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+A simple RESTful API for managing todos built with Laravel 12.
 
-## About Laravel
+## Setup
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+1. Clone the repository:
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+    ```bash
+    git clone <repository-url>
+    cd todo-api
+    ```
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+2. Install dependencies:
 
-## Learning Laravel
+    ```bash
+    composer install
+    ```
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+3. Configure your environment:
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+    - Copy `.env.example` to `.env`
+    - Update database settings in `.env`
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+4. Run migrations:
 
-## Laravel Sponsors
+    ```bash
+    php artisan migrate
+    ```
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+5. Start the server:
+    ```bash
+    php artisan serve
+    ```
 
-### Premium Partners
+## API Endpoints
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+### Get All Todos
 
-## Contributing
+-   **Method:** GET
+-   **URL:** `/api/todos`
+-   **Description:** Retrieves a list of all todos.
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+### Create Todo
 
-## Code of Conduct
+-   **Method:** POST
+-   **URL:** `/api/todos`
+-   **Body:**
+    ```json
+    {
+        "title": "New Todo",
+        "description": "Description of the new todo",
+        "completed": false
+    }
+    ```
+-   **Description:** Creates a new todo.
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+### Get Todo by ID
 
-## Security Vulnerabilities
+-   **Method:** GET
+-   **URL:** `/api/todos/{id}`
+-   **Description:** Retrieves a specific todo by its ID.
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+### Update Todo
+
+-   **Method:** PUT
+-   **URL:** `/api/todos/{id}`
+-   **Body:**
+    ```json
+    {
+        "title": "Updated Todo",
+        "description": "Updated description",
+        "completed": true
+    }
+    ```
+-   **Description:** Updates an existing todo.
+
+### Delete Todo
+
+-   **Method:** DELETE
+-   **URL:** `/api/todos/{id}`
+-   **Description:** Deletes a todo by its ID.
+
+## Testing with Postman
+
+A Postman collection is provided in `postman_collection.json`. Import this file into Postman to test the API endpoints.
+
+1. Open Postman.
+2. Click "Import" and select `postman_collection.json`.
+3. Set the `base_url` variable to your API's base URL (e.g., `http://localhost:8000`).
+4. You can now test all endpoints easily!
+
+## Code Quality Tools
+
+This project uses the following tools to maintain code quality:
+
+-   **Laravel Pint:** For code formatting.
+-   **PHP Insights:** For code quality analysis.
+-   **Larastan:** For static analysis.
+
+Run these tools using:
+
+```bash
+./vendor/bin/pint
+./vendor/bin/phpinsights
+./vendor/bin/phpstan analyse app
+```
 
 ## License
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+This project is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).

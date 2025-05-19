@@ -1,0 +1,283 @@
+{
+    "info": {
+        "name": "Todo API",
+        "description": "A RESTful API for managing todos built with Laravel 12. This API provides endpoints for creating, reading, updating, and deleting todo items.",
+        "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+    },
+    "variable": [
+        {
+            "key": "base_url",
+            "value": "http://todo-api.test",
+            "type": "string",
+            "description": "The base URL of your API server"
+        }
+    ],
+    "item": [
+        {
+            "name": "Get All Todos",
+            "request": {
+                "method": "GET",
+                "header": [
+                    {
+                        "key": "Accept",
+                        "value": "application/json"
+                    }
+                ],
+                "url": {
+                    "raw": "{{base_url}}/api/v1/todos",
+                    "host": ["{{base_url}}"],
+                    "path": ["api", "v1", "todos"]
+                },
+                "description": "Retrieves a paginated list of all todos. The response includes pagination metadata."
+            },
+            "response": [
+                {
+                    "name": "Success Response",
+                    "originalRequest": {
+                        "method": "GET",
+                        "url": {
+                            "raw": "{{base_url}}/api/v1/todos"
+                        }
+                    },
+                    "status": "OK",
+                    "code": 200,
+                    "header": [
+                        {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                        }
+                    ],
+                    "body": {
+                        "data": [
+                            {
+                                "id": 1,
+                                "title": "Example Todo",
+                                "description": "This is an example todo",
+                                "status": "pending",
+                                "due_date": "2024-03-25",
+                                "created_at": "2024-03-21T10:00:00.000000Z",
+                                "updated_at": "2024-03-21T10:00:00.000000Z"
+                            }
+                        ],
+                        "links": {
+                            "first": "http://localhost:8000/api/v1/todos?page=1",
+                            "last": "http://localhost:8000/api/v1/todos?page=1",
+                            "prev": null,
+                            "next": null
+                        },
+                        "meta": {
+                            "current_page": 1,
+                            "from": 1,
+                            "last_page": 1,
+                            "path": "http://localhost:8000/api/v1/todos",
+                            "per_page": 10,
+                            "to": 1,
+                            "total": 1
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Create Todo",
+            "request": {
+                "method": "POST",
+                "header": [
+                    {
+                        "key": "Accept",
+                        "value": "application/json"
+                    },
+                    {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\n    \"title\": \"New Todo\",\n    \"description\": \"This is a new todo item\",\n    \"status\": \"pending\",\n    \"due_date\": \"2024-03-25\"\n}",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    }
+                },
+                "url": {
+                    "raw": "{{base_url}}/api/v1/todos",
+                    "host": ["{{base_url}}"],
+                    "path": ["api", "v1", "todos"]
+                },
+                "description": "Creates a new todo item. The request body must include title, description, and status. Due date is optional."
+            },
+            "response": [
+                {
+                    "name": "Success Response",
+                    "originalRequest": {
+                        "method": "POST",
+                        "url": {
+                            "raw": "{{base_url}}/api/v1/todos"
+                        }
+                    },
+                    "status": "Created",
+                    "code": 201,
+                    "header": [
+                        {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                        }
+                    ],
+                    "body": {
+                        "data": {
+                            "id": 1,
+                            "title": "New Todo",
+                            "description": "This is a new todo item",
+                            "status": "pending",
+                            "due_date": "2024-03-25",
+                            "created_at": "2024-03-21T10:00:00.000000Z",
+                            "updated_at": "2024-03-21T10:00:00.000000Z"
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Get Todo by ID",
+            "request": {
+                "method": "GET",
+                "header": [
+                    {
+                        "key": "Accept",
+                        "value": "application/json"
+                    }
+                ],
+                "url": {
+                    "raw": "{{base_url}}/api/v1/todos/1",
+                    "host": ["{{base_url}}"],
+                    "path": ["api", "v1", "todos", "1"]
+                },
+                "description": "Retrieves a specific todo item by its ID."
+            },
+            "response": [
+                {
+                    "name": "Success Response",
+                    "originalRequest": {
+                        "method": "GET",
+                        "url": {
+                            "raw": "{{base_url}}/api/v1/todos/1"
+                        }
+                    },
+                    "status": "OK",
+                    "code": 200,
+                    "header": [
+                        {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                        }
+                    ],
+                    "body": {
+                        "data": {
+                            "id": 1,
+                            "title": "Example Todo",
+                            "description": "This is an example todo",
+                            "status": "pending",
+                            "due_date": "2024-03-25",
+                            "created_at": "2024-03-21T10:00:00.000000Z",
+                            "updated_at": "2024-03-21T10:00:00.000000Z"
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Update Todo",
+            "request": {
+                "method": "PUT",
+                "header": [
+                    {
+                        "key": "Accept",
+                        "value": "application/json"
+                    },
+                    {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\n    \"title\": \"Updated Todo\",\n    \"description\": \"This todo has been updated\",\n    \"status\": \"in_progress\",\n    \"due_date\": \"2024-03-26\"\n}",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    }
+                },
+                "url": {
+                    "raw": "{{base_url}}/api/v1/todos/1",
+                    "host": ["{{base_url}}"],
+                    "path": ["api", "v1", "todos", "1"]
+                },
+                "description": "Updates an existing todo item. All fields are optional, but at least one field must be provided."
+            },
+            "response": [
+                {
+                    "name": "Success Response",
+                    "originalRequest": {
+                        "method": "PUT",
+                        "url": {
+                            "raw": "{{base_url}}/api/v1/todos/1"
+                        }
+                    },
+                    "status": "OK",
+                    "code": 200,
+                    "header": [
+                        {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                        }
+                    ],
+                    "body": {
+                        "data": {
+                            "id": 1,
+                            "title": "Updated Todo",
+                            "description": "This todo has been updated",
+                            "status": "in_progress",
+                            "due_date": "2024-03-26",
+                            "created_at": "2024-03-21T10:00:00.000000Z",
+                            "updated_at": "2024-03-21T10:00:00.000000Z"
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Delete Todo",
+            "request": {
+                "method": "DELETE",
+                "header": [
+                    {
+                        "key": "Accept",
+                        "value": "application/json"
+                    }
+                ],
+                "url": {
+                    "raw": "{{base_url}}/api/v1/todos/1",
+                    "host": ["{{base_url}}"],
+                    "path": ["api", "v1", "todos", "1"]
+                },
+                "description": "Deletes a todo item by its ID. Returns a 204 No Content response on success."
+            },
+            "response": [
+                {
+                    "name": "Success Response",
+                    "originalRequest": {
+                        "method": "DELETE",
+                        "url": {
+                            "raw": "{{base_url}}/api/v1/todos/1"
+                        }
+                    },
+                    "status": "No Content",
+                    "code": 204
+                }
+            ]
+        }
+    ]
+}
