@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Repositories\Eloquent\V1;
 
 use App\Models\Todo;
+use App\Models\User;
 use App\Repositories\Interfaces\V1\TodoRepositoryInterface;
 use Illuminate\Pagination\LengthAwarePaginator;
 
@@ -59,5 +60,15 @@ class TodoRepository implements TodoRepositoryInterface
     public function delete(Todo $todo): bool
     {
         return $todo->delete();
+    }
+
+    public function deleteAll(): bool
+    {
+        return $this->model->truncate();
+    }
+
+    public function deleteAllForUser(User $user): int
+    {
+        return $user->todos()->delete();
     }
 } 

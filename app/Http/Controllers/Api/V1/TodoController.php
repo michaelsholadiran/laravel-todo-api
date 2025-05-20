@@ -28,9 +28,10 @@ class TodoController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(): AnonymousResourceCollection
+    public function index(Request $request): AnonymousResourceCollection
     {
-        $todos = Todo::latest()->paginate(10);
+        $user = $request->get('user');
+        $todos = $user->todos()->latest()->paginate(10);
         return TodoResource::collection($todos);
     }
 
@@ -39,16 +40,21 @@ class TodoController extends Controller
      */
     public function store(StoreTodoRequest $request): TodoResource
     {
+        $user = $request->get('user');
         $validated = $request->validated();
-        $todo = Todo::create($validated);
+        $todo = $user->todos()->create($validated);
         return new TodoResource($todo);
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Todo $todo): TodoResource
+    public function show(Request $request, Todo $todo): TodoResource
     {
+        $user = $request->get('user');
+        if ($todo->user_id !== $user->id) {
+            abort(404);
+        }
         return new TodoResource($todo);
     }
 
@@ -57,6 +63,10 @@ class TodoController extends Controller
      */
     public function update(UpdateTodoRequest $request, Todo $todo): TodoResource
     {
+        $user = $request->get('user');
+        if ($todo->user_id !== $user->id) {
+            abort(404);
+        }
         $validated = $request->validated();
         $todo->update($validated);
         return new TodoResource($todo);
@@ -65,9 +75,20 @@ class TodoController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Todo $todo): Response
+    public function destroy(Request $request, Todo $todo): Response
     {
+        $user = $request->get('user');
+        if ($todo->user_id !== $user->id) {
+            abort(404);
+        }
         $todo->delete();
         return response()->noContent();
+    }
+
+    public function destroyAll(Request $request): Response
+    {
+        $user = $request->get('user');
+        $deleted = $this->todoRepository->deleteAllForUser($user);
+        return response()->noContent()->header('X-Todos-Deleted', $deleted);
     }
 } 

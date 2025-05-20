@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Repositories\Interfaces\V1;
 
 use App\Models\Todo;
+use App\Models\User;
 use Illuminate\Pagination\LengthAwarePaginator;
 
 interface TodoRepositoryInterface
@@ -39,4 +40,14 @@ interface TodoRepositoryInterface
      * Delete a todo.
      */
     public function delete(Todo $todo): bool;
+
+    /**
+     * Delete all todos.
+     */
+    public function deleteAll(): bool;
+
+    /**
+     * Delete all todos for a user.
+     */
+    public function deleteAllForUser(User $user): int;
 } 

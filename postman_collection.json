@@ -1,80 +1,42 @@
 {
     "info": {
-        "name": "Todo API",
-        "description": "A RESTful API for managing todos built with Laravel 12. This API provides endpoints for creating, reading, updating, and deleting todo items.",
+        "name": "Todo API v1 (Token Auth)",
+        "description": "API for managing todos. All endpoints require a Bearer token (user's unique token). If the token is new, a user is auto-created. All todos are scoped to the authenticated user.",
         "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
     },
     "variable": [
         {
-            "key": "base_url",
-            "value": "http://todo-api.test",
-            "type": "string",
-            "description": "The base URL of your API server"
+            "key": "token",
+            "value": "your-unique-token-here",
+            "type": "string"
         }
     ],
     "item": [
         {
-            "name": "Get All Todos",
+            "name": "List Todos",
             "request": {
                 "method": "GET",
                 "header": [
                     {
-                        "key": "Accept",
-                        "value": "application/json"
+                        "key": "Authorization",
+                        "value": "Bearer {{token}}",
+                        "type": "text"
                     }
                 ],
                 "url": {
-                    "raw": "{{base_url}}/api/v1/todos",
-                    "host": ["{{base_url}}"],
+                    "raw": "http://todo-api.test/api/v1/todos",
+                    "protocol": "http",
+                    "host": ["todo-api.test"],
                     "path": ["api", "v1", "todos"]
-                },
-                "description": "Retrieves a paginated list of all todos. The response includes pagination metadata."
+                }
             },
             "response": [
                 {
-                    "name": "Success Response",
-                    "originalRequest": {
-                        "method": "GET",
-                        "url": {
-                            "raw": "{{base_url}}/api/v1/todos"
-                        }
-                    },
+                    "name": "Success",
+                    "originalRequest": {},
                     "status": "OK",
                     "code": 200,
-                    "header": [
-                        {
-                            "key": "Content-Type",
-                            "value": "application/json"
-                        }
-                    ],
-                    "body": {
-                        "data": [
-                            {
-                                "id": 1,
-                                "title": "Example Todo",
-                                "description": "This is an example todo",
-                                "status": "pending",
-                                "due_date": "2024-03-25",
-                                "created_at": "2024-03-21T10:00:00.000000Z",
-                                "updated_at": "2024-03-21T10:00:00.000000Z"
-                            }
-                        ],
-                        "links": {
-                            "first": "http://localhost:8000/api/v1/todos?page=1",
-                            "last": "http://localhost:8000/api/v1/todos?page=1",
-                            "prev": null,
-                            "next": null
-                        },
-                        "meta": {
-                            "current_page": 1,
-                            "from": 1,
-                            "last_page": 1,
-                            "path": "http://localhost:8000/api/v1/todos",
-                            "per_page": 10,
-                            "to": 1,
-                            "total": 1
-                        }
-                    }
+                    "body": "{\n  \"data\": [\n    {\n      \"id\": 1,\n      \"title\": \"Buy milk\",\n      \"description\": \"2 liters of milk\",\n      \"status\": \"pending\",\n      \"due_date\": null,\n      \"created_at\": \"2024-06-01T12:00:00.000000Z\",\n      \"updated_at\": \"2024-06-01T12:00:00.000000Z\"\n    }\n  ],\n  \"links\": { ... },\n  \"meta\": { ... }\n}"
                 }
             ]
         },
@@ -84,106 +46,69 @@
                 "method": "POST",
                 "header": [
                     {
-                        "key": "Accept",
-                        "value": "application/json"
+                        "key": "Authorization",
+                        "value": "Bearer {{token}}",
+                        "type": "text"
                     },
                     {
                         "key": "Content-Type",
-                        "value": "application/json"
+                        "value": "application/json",
+                        "type": "text"
                     }
                 ],
                 "body": {
                     "mode": "raw",
-                    "raw": "{\n    \"title\": \"New Todo\",\n    \"description\": \"This is a new todo item\",\n    \"status\": \"pending\",\n    \"due_date\": \"2024-03-25\"\n}",
-                    "options": {
-                        "raw": {
-                            "language": "json"
-                        }
-                    }
+                    "raw": "{\n  \"title\": \"Buy milk\",\n  \"description\": \"2 liters of milk\",\n  \"status\": \"pending\",\n  \"due_date\": null\n}"
                 },
                 "url": {
-                    "raw": "{{base_url}}/api/v1/todos",
-                    "host": ["{{base_url}}"],
+                    "raw": "http://todo-api.test/api/v1/todos",
+                    "protocol": "http",
+                    "host": ["todo-api.test"],
                     "path": ["api", "v1", "todos"]
-                },
-                "description": "Creates a new todo item. The request body must include title, description, and status. Due date is optional."
+                }
             },
             "response": [
                 {
-                    "name": "Success Response",
-                    "originalRequest": {
-                        "method": "POST",
-                        "url": {
-                            "raw": "{{base_url}}/api/v1/todos"
-                        }
-                    },
+                    "name": "Created",
+                    "originalRequest": {},
                     "status": "Created",
                     "code": 201,
-                    "header": [
-                        {
-                            "key": "Content-Type",
-                            "value": "application/json"
-                        }
-                    ],
-                    "body": {
-                        "data": {
-                            "id": 1,
-                            "title": "New Todo",
-                            "description": "This is a new todo item",
-                            "status": "pending",
-                            "due_date": "2024-03-25",
-                            "created_at": "2024-03-21T10:00:00.000000Z",
-                            "updated_at": "2024-03-21T10:00:00.000000Z"
-                        }
-                    }
+                    "body": "{\n  \"data\": {\n    \"id\": 2,\n    \"title\": \"Buy milk\",\n    \"description\": \"2 liters of milk\",\n    \"status\": \"pending\",\n    \"due_date\": null,\n    \"created_at\": \"2024-06-01T12:00:00.000000Z\",\n    \"updated_at\": \"2024-06-01T12:00:00.000000Z\"\n  }\n}"
                 }
             ]
         },
         {
-            "name": "Get Todo by ID",
+            "name": "Show Todo",
             "request": {
                 "method": "GET",
                 "header": [
                     {
-                        "key": "Accept",
-                        "value": "application/json"
+                        "key": "Authorization",
+                        "value": "Bearer {{token}}",
+                        "type": "text"
                     }
                 ],
                 "url": {
-                    "raw": "{{base_url}}/api/v1/todos/1",
-                    "host": ["{{base_url}}"],
+                    "raw": "http://todo-api.test/api/v1/todos/1",
+                    "protocol": "http",
+                    "host": ["todo-api.test"],
                     "path": ["api", "v1", "todos", "1"]
-                },
-                "description": "Retrieves a specific todo item by its ID."
+                }
             },
             "response": [
                 {
-                    "name": "Success Response",
-                    "originalRequest": {
-                        "method": "GET",
-                        "url": {
-                            "raw": "{{base_url}}/api/v1/todos/1"
-                        }
-                    },
+                    "name": "Success",
+                    "originalRequest": {},
                     "status": "OK",
                     "code": 200,
-                    "header": [
-                        {
-                            "key": "Content-Type",
-                            "value": "application/json"
-                        }
-                    ],
-                    "body": {
-                        "data": {
-                            "id": 1,
-                            "title": "Example Todo",
-                            "description": "This is an example todo",
-                            "status": "pending",
-                            "due_date": "2024-03-25",
-                            "created_at": "2024-03-21T10:00:00.000000Z",
-                            "updated_at": "2024-03-21T10:00:00.000000Z"
-                        }
-                    }
+                    "body": "{\n  \"data\": {\n    \"id\": 1,\n    \"title\": \"Buy milk\",\n    \"description\": \"2 liters of milk\",\n    \"status\": \"pending\",\n    \"due_date\": null,\n    \"created_at\": \"2024-06-01T12:00:00.000000Z\",\n    \"updated_at\": \"2024-06-01T12:00:00.000000Z\"\n  }\n}"
+                },
+                {
+                    "name": "Not Found (if not owned by user)",
+                    "originalRequest": {},
+                    "status": "Not Found",
+                    "code": 404,
+                    "body": "{\n  \"message\": \"Not Found\"\n}"
                 }
             ]
         },
@@ -193,58 +118,41 @@
                 "method": "PUT",
                 "header": [
                     {
-                        "key": "Accept",
-                        "value": "application/json"
+                        "key": "Authorization",
+                        "value": "Bearer {{token}}",
+                        "type": "text"
                     },
                     {
                         "key": "Content-Type",
-                        "value": "application/json"
+                        "value": "application/json",
+                        "type": "text"
                     }
                 ],
                 "body": {
                     "mode": "raw",
-                    "raw": "{\n    \"title\": \"Updated Todo\",\n    \"description\": \"This todo has been updated\",\n    \"status\": \"in_progress\",\n    \"due_date\": \"2024-03-26\"\n}",
-                    "options": {
-                        "raw": {
-                            "language": "json"
-                        }
-                    }
+                    "raw": "{\n  \"title\": \"Buy bread\",\n  \"description\": \"Whole grain\",\n  \"status\": \"in_progress\",\n  \"due_date\": null\n}"
                 },
                 "url": {
-                    "raw": "{{base_url}}/api/v1/todos/1",
-                    "host": ["{{base_url}}"],
+                    "raw": "http://todo-api.test/api/v1/todos/1",
+                    "protocol": "http",
+                    "host": ["todo-api.test"],
                     "path": ["api", "v1", "todos", "1"]
-                },
-                "description": "Updates an existing todo item. All fields are optional, but at least one field must be provided."
+                }
             },
             "response": [
                 {
-                    "name": "Success Response",
-                    "originalRequest": {
-                        "method": "PUT",
-                        "url": {
-                            "raw": "{{base_url}}/api/v1/todos/1"
-                        }
-                    },
+                    "name": "Success",
+                    "originalRequest": {},
                     "status": "OK",
                     "code": 200,
-                    "header": [
-                        {
-                            "key": "Content-Type",
-                            "value": "application/json"
-                        }
-                    ],
-                    "body": {
-                        "data": {
-                            "id": 1,
-                            "title": "Updated Todo",
-                            "description": "This todo has been updated",
-                            "status": "in_progress",
-                            "due_date": "2024-03-26",
-                            "created_at": "2024-03-21T10:00:00.000000Z",
-                            "updated_at": "2024-03-21T10:00:00.000000Z"
-                        }
-                    }
+                    "body": "{\n  \"data\": {\n    \"id\": 1,\n    \"title\": \"Buy bread\",\n    \"description\": \"Whole grain\",\n    \"status\": \"in_progress\",\n    \"due_date\": null,\n    \"created_at\": \"2024-06-01T12:00:00.000000Z\",\n    \"updated_at\": \"2024-06-01T12:10:00.000000Z\"\n  }\n}"
+                },
+                {
+                    "name": "Not Found (if not owned by user)",
+                    "originalRequest": {},
+                    "status": "Not Found",
+                    "code": 404,
+                    "body": "{\n  \"message\": \"Not Found\"\n}"
                 }
             ]
         },
@@ -254,28 +162,66 @@
                 "method": "DELETE",
                 "header": [
                     {
-                        "key": "Accept",
-                        "value": "application/json"
+                        "key": "Authorization",
+                        "value": "Bearer {{token}}",
+                        "type": "text"
                     }
                 ],
                 "url": {
-                    "raw": "{{base_url}}/api/v1/todos/1",
-                    "host": ["{{base_url}}"],
+                    "raw": "http://todo-api.test/api/v1/todos/1",
+                    "protocol": "http",
+                    "host": ["todo-api.test"],
                     "path": ["api", "v1", "todos", "1"]
-                },
-                "description": "Deletes a todo item by its ID. Returns a 204 No Content response on success."
+                }
             },
             "response": [
                 {
-                    "name": "Success Response",
-                    "originalRequest": {
-                        "method": "DELETE",
-                        "url": {
-                            "raw": "{{base_url}}/api/v1/todos/1"
-                        }
-                    },
+                    "name": "No Content",
+                    "originalRequest": {},
                     "status": "No Content",
-                    "code": 204
+                    "code": 204,
+                    "body": ""
+                },
+                {
+                    "name": "Not Found (if not owned by user)",
+                    "originalRequest": {},
+                    "status": "Not Found",
+                    "code": 404,
+                    "body": "{\n  \"message\": \"Not Found\"\n}"
+                }
+            ]
+        },
+        {
+            "name": "Delete All Todos",
+            "request": {
+                "method": "DELETE",
+                "header": [
+                    {
+                        "key": "Authorization",
+                        "value": "Bearer {{token}}",
+                        "type": "text"
+                    }
+                ],
+                "url": {
+                    "raw": "http://todo-api.test/api/v1/todos/all",
+                    "protocol": "http",
+                    "host": ["todo-api.test"],
+                    "path": ["api", "v1", "todos", "all"]
+                }
+            },
+            "response": [
+                {
+                    "name": "No Content",
+                    "originalRequest": {},
+                    "status": "No Content",
+                    "code": 204,
+                    "header": [
+                        {
+                            "key": "X-Todos-Deleted",
+                            "value": "2"
+                        }
+                    ],
+                    "body": ""
                 }
             ]
         }
