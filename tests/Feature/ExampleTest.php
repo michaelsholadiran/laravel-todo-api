@@ -7,3 +7,14 @@ test('the application returns a successful response', function () {
 
     $response->assertStatus(200);
 });
+
+
+
+
+❌ Messy API:
+
+GET /getUserInfo?type=admin&details=true
+
+✅ Clean API:
+
+GET /users/admin?includeDetails=true

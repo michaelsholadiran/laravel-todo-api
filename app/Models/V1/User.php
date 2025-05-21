@@ -1,10 +1,7 @@
 <?php
 
-declare(strict_types=1);
+namespace App\Models\V1;
 
-namespace App\Models;
-
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -28,4 +25,4 @@ class User extends Authenticatable
     {
         return $this->hasMany(Todo::class);
     }
-}
+} 

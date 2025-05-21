@@ -1,11 +1,9 @@
 <?php
 
-declare(strict_types=1);
-
 namespace App\Repositories\Eloquent\V1;
 
-use App\Models\Todo;
-use App\Models\User;
+use App\Models\V1\Todo;
+use App\Models\V1\User;
 use App\Repositories\Interfaces\V1\TodoRepositoryInterface;
 use Illuminate\Pagination\LengthAwarePaginator;
 

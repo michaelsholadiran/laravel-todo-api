@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::prefix('v1')->middleware(['api', 'token.auth'])->group(function () {
+Route::prefix('v1')->middleware(['token.auth'])->group(function () {
     Route::delete('todos/all', [TodoController::class, 'destroyAll']);
     Route::apiResource('todos', TodoController::class);
 });

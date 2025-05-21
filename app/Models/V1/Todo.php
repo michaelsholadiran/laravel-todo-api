@@ -1,8 +1,6 @@
 <?php
 
-declare(strict_types=1);
-
-namespace App\Models;
+namespace App\Models\V1;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -39,4 +37,4 @@ class Todo extends Model
     {
         return $this->belongsTo(User::class);
     }
-}
+} 

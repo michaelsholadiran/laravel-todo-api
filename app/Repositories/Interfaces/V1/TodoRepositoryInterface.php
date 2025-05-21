@@ -1,11 +1,9 @@
 <?php
 
-declare(strict_types=1);
-
 namespace App\Repositories\Interfaces\V1;
 
-use App\Models\Todo;
-use App\Models\User;
+use App\Models\V1\Todo;
+use App\Models\V1\User;
 use Illuminate\Pagination\LengthAwarePaginator;
 
 interface TodoRepositoryInterface

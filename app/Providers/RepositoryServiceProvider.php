@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Providers;
 
-use App\Models\Todo;
+use App\Models\V1\Todo;
 use App\Repositories\Eloquent\V1\TodoRepository;
 use App\Repositories\Interfaces\V1\TodoRepositoryInterface;
 use Illuminate\Support\ServiceProvider;

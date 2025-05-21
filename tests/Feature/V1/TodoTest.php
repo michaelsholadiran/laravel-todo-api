@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Feature\V1;
 
-use App\Models\Todo;
+use App\Models\V1\Todo;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use function Pest\Laravel\{get, post, put, delete};
 

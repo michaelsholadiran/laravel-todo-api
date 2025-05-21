@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
@@ -11,18 +9,16 @@ use App\Http\Resources\V1\TodoCollection;
 use App\Http\Resources\V1\TodoResource;
 use App\Repositories\Interfaces\V1\TodoRepositoryInterface;
 use Illuminate\Http\JsonResponse;
-use App\Models\Todo;
+use App\Models\V1\Todo;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Http\Response;
 
 class TodoController extends Controller
 {
-    protected $todoRepository;
-
-    public function __construct(TodoRepositoryInterface $todoRepository)
-    {
-        $this->todoRepository = $todoRepository;
+    public function __construct(
+        protected TodoRepositoryInterface $todoRepository
+    ) {
     }
 
     /**
